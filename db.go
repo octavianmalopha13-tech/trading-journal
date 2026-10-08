@@ -61,7 +61,7 @@ func createTables(db *sql.DB) error{
     FOREIGN KEY (account_id) REFERENCES accounts(id)
   );`,
 
-  `CREATE TABLE IF NOT EXISTS journal(
+  `CREATE TABLE IF NOT EXISTS journals(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     trade_id INTEGER UNIQUE NOT NULL,
     setup TEXT,

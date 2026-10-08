@@ -89,6 +89,20 @@ func main() {
 		r.Delete("/{id}", func(w http.ResponseWriter, r *http.Request) {
 			handleDeleteTrade(w, r, db)
 		})
+
+		// NEW – Journal routes (nested under a specific trade)
+		r.Post("/{id}/journal", func(w http.ResponseWriter, r *http.Request) {
+			handleCreateJournal(w, r, db)
+		})
+		r.Get("/{id}/journal", func(w http.ResponseWriter, r *http.Request) {
+			handleGetJournal(w, r, db)
+		})
+		r.Put("/{id}/journal", func(w http.ResponseWriter, r *http.Request) {
+			handleUpdateJournal(w, r, db)
+		})
+		r.Delete("/{id}/journal", func(w http.ResponseWriter, r *http.Request) {
+			handleDeleteJournal(w, r, db)
+		})
 	})
 
 	// 5. Start server
