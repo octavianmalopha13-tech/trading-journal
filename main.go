@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -32,6 +33,12 @@ func main() {
 	}
 	defer db.Close()
 	log.Println("✅ Database ready")
+
+	if os.Getenv("SEED") == "1" {
+		if err := seedDatabase(db); err != nil {
+			log.Fatalf("Seed failed: %v", err)
+		}
+	}
 
 	// 2. Chi router
 	r := chi.NewRouter()
