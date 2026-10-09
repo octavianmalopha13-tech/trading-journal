@@ -112,6 +112,28 @@ func main() {
 		})
 	})
 
+	r.Route("/analytics", func(r chi.Router) {
+		r.Use(func(next http.Handler) http.Handler {
+			return authMiddleware(next.ServeHTTP)
+		})
+
+		r.Get("/summary", func(w http.ResponseWriter, r *http.Request) {
+			handleAnalyticsSummary(w, r, db)
+		})
+
+		r.Get("/by-symbol", func(w http.ResponseWriter, r *http.Request) {
+			handleAnalyticsBySymbol(w, r, db)
+		})
+
+		r.Get("/by-setup", func(w http.ResponseWriter, r *http.Request) {
+			handleAnalyticsBySetup(w, r, db)
+		})
+
+		r.Get("/equity-curve", func(w http.ResponseWriter, r *http.Request) {
+			handleAnalyticsEquityCurve(w, r, db)
+		})
+	})
+
 	// 5. Start server
 	port := ":8080"
 	log.Printf("🚀 Server on http://localhost%s", port)
